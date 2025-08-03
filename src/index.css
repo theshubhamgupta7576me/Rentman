@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reddit Sans Font Family */
+@font-face {
+  font-family: 'Reddit Sans';
+  src: url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  font-weight: 300 700;
+  font-style: normal;
+}
+
+/* Custom utility classes for Reddit Sans */
+@layer utilities {
+  .font-reddit-sans {
+    font-family: 'Reddit Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  .font-reddit-sans-light {
+    font-family: 'Reddit Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 300;
+  }
+  
+  .font-reddit-sans-regular {
+    font-family: 'Reddit Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 400;
+  }
+  
+  .font-reddit-sans-medium {
+    font-family: 'Reddit Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 500;
+  }
+  
+  .font-reddit-sans-semibold {
+    font-family: 'Reddit Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 600;
+  }
+  
+  .font-reddit-sans-bold {
+    font-family: 'Reddit Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 700;
+  }
+}
