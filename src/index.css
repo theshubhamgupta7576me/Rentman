@@ -10,6 +10,45 @@
   font-style: normal;
 }
 
+/* Mobile full-screen mode styles */
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari specific styles */
+  body {
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Full-screen mode when launched from home screen */
+@media screen and (display-mode: standalone) {
+  body {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  #root {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Safe area support for devices with notches */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+    padding-top: max(0px, env(safe-area-inset-top));
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+  }
+}
+
 /* Custom utility classes for Reddit Sans */
 @layer utilities {
   .font-reddit-sans {
