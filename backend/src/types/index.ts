@@ -9,7 +9,6 @@ export interface Tenant {
   propertyType: 'residential' | 'commercial';
   phoneNumber?: string;
   notes?: string;
-  documents: UploadedFile[];
   isArchived?: boolean;
   closingDate?: string;
   closingNotes?: string;
@@ -32,7 +31,6 @@ export interface RentLog {
   collector: string;
   paymentMode: 'online' | 'cash';
   notes: string;
-  attachments: UploadedFile[];
   createdAt: string;
   updatedAt: string;
 }
@@ -58,6 +56,8 @@ export interface UploadedFile {
   size: number;
   data: string; // base64 encoded data
   uploadedAt: string;
+  tenantId?: string;
+  rentLogId?: string;
 }
 
 export interface DashboardStats {

@@ -50,7 +50,7 @@ function App() {
       <ToastProvider>
         <div className="flex min-h-screen bg-gray-50">
           <Navigation currentPage={currentPage} onPageChange={setCurrentPage} />
-          <main className="flex-1 overflow-auto md:ml-64 pt-16 md:pt-0 pb-4 md:pb-0">
+          <main className="flex-1 overflow-auto md:ml-64 pt-16 md:pt-0 pb-24 md:pb-0">
             {renderPage()}
           </main>
         </div>
