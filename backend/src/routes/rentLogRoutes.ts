@@ -1,45 +1,69 @@
-import { Router } from 'express';
-import { RentLogController } from '../controllers/rentLogController';
+import express from 'express';
+import { authenticateToken, AuthRequest } from '../middleware/auth';
+import * as rentLogService from '../services/rentLogService';
 
-const router = Router();
+const router = express.Router();
+
+router.use(authenticateToken);
 
 // Get all rent logs
-router.get('/', RentLogController.getAllRentLogs);
-
-// Get recent rent logs
-router.get('/recent', RentLogController.getRecentRentLogs);
-
-// Get current month rent logs
-router.get('/current-month', RentLogController.getCurrentMonthRentLogs);
-
-// Search rent logs
-router.get('/search', RentLogController.searchRentLogs);
-
-// Get rent logs by collector
-router.get('/collector/:collector', RentLogController.getRentLogsByCollector);
-
-// Get rent logs by tenant ID
-router.get('/tenant/:tenantId', RentLogController.getRentLogsByTenantId);
-
-// Get dashboard statistics
-router.post('/dashboard-stats', RentLogController.getDashboardStats);
-
-// Get monthly statistics
-router.post('/monthly-stats', RentLogController.getMonthlyStats);
-
-// Get rent logs by date range
-router.post('/date-range', RentLogController.getRentLogsByDateRange);
-
-// Create new rent log
-router.post('/', RentLogController.createRentLog);
+router.get('/', async (req: AuthRequest, res) => {
+  try {
+    const logs = await rentLogService.getRentLogs(req.userId!);
+    res.json({ success: true, data: logs });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Failed to fetch rent logs' });
+  }
+});
 
 // Get rent log by ID
-router.get('/:id', RentLogController.getRentLogById);
+router.get('/:id', async (req: AuthRequest, res) => {
+  try {
+    const log = await rentLogService.getRentLogById(req.userId!, req.params.id);
+    if (!log) {
+      return res.status(404).json({ success: false, message: 'Rent log not found' });
+    }
+    res.json({ success: true, data: log });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Failed to fetch rent log' });
+  }
+});
+
+// Create rent log
+router.post('/', async (req: AuthRequest, res) => {
+  try {
+    const log = await rentLogService.createRentLog(req.userId!, req.body);
+    res.status(201).json({ success: true, data: log });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Failed to create rent log' });
+  }
+});
 
 // Update rent log
-router.put('/:id', RentLogController.updateRentLog);
+router.put('/:id', async (req: AuthRequest, res) => {
+  try {
+    const log = await rentLogService.updateRentLog(req.userId!, req.params.id, req.body);
+    if (!log) {
+      return res.status(404).json({ success: false, message: 'Rent log not found' });
+    }
+    res.json({ success: true, data: log });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Failed to update rent log' });
+  }
+});
 
 // Delete rent log
-router.delete('/:id', RentLogController.deleteRentLog);
+router.delete('/:id', async (req: AuthRequest, res) => {
+  try {
+    const deleted = await rentLogService.deleteRentLog(req.userId!, req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ success: false, message: 'Rent log not found' });
+    }
+    res.json({ success: true, message: 'Rent log deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Failed to delete rent log' });
+  }
+});
 
 export default router;
+
