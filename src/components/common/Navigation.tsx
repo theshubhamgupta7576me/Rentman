@@ -1,5 +1,4 @@
-import { Users, FileText, BarChart3, Settings, Home, User, LogOut } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { Users, FileText, BarChart3, Settings, Home, User } from 'lucide-react';
 
 interface NavigationProps {
   currentPage: string;
@@ -13,7 +12,6 @@ const navItems = [
 ];
 
 export function Navigation({ currentPage, onPageChange }: NavigationProps) {
-  const { user, logout } = useAuth();
   
   return (
     <>
@@ -64,24 +62,15 @@ export function Navigation({ currentPage, onPageChange }: NavigationProps) {
         
         {/* Profile Section at Bottom */}
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white">
-          <div className="flex items-center pl-4 mb-2">
+          <div className="flex items-center pl-4">
             <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mr-3">
               <User className="w-5 h-5 text-gray-600" />
             </div>
-            <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">
-                {user?.email || user?.phoneNumber || 'User'}
-              </p>
+            <div>
+              <p className="text-sm font-medium text-gray-900">Rentman</p>
               <p className="text-xs text-gray-500">LANDLORD</p>
             </div>
           </div>
-          <button
-            onClick={logout}
-            className="w-full flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
-          >
-            <LogOut className="w-4 h-4 mr-2" />
-            <span className="text-sm">Logout</span>
-          </button>
         </div>
       </nav>
 
